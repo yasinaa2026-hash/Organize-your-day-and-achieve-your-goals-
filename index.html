@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101a35">
+  <title>وقتي — نظّم يومك وتحدَّ أصدقاءك</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="وقتي">
+        <span class="brand-mark"><span>و</span></span>
+        <span class="brand-copy"><strong>وقتي</strong><small>خطّط • أنجز • نافس</small></span>
+      </a>
+      <div class="side-label">القائمة الرئيسية</div>
+      <nav class="nav-list" aria-label="التنقل الرئيسي">
+        <button class="nav-item active" data-page="home"><span class="nav-icon">⌂</span><span>نظرة عامة</span></button>
+        <button class="nav-item" data-page="tasks"><span class="nav-icon">✓</span><span>مهامي</span><span class="nav-count" id="navTaskCount">0</span></button>
+        <button class="nav-item" data-page="focus"><span class="nav-icon">◷</span><span>وضع التركيز</span></button>
+        <button class="nav-item" data-page="rooms"><span class="nav-icon">♧</span><span>غرف التحدّي</span><span class="nav-dot"></span></button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="quote-card">
+          <span class="quote-spark">✦</span>
+          <p>خطوة صغيرة اليوم، تصنع فرقاً كبيراً غداً.</p>
+          <small>تذكيرك اليومي</small>
+        </div>
+        <button class="nav-item settings-link" data-page="settings"><span class="nav-icon">⚙</span><span>الإعدادات والربط</span></button>
+        <div class="profile-mini"><div class="avatar avatar-you">ي</div><div><strong id="profileName">صديقي</strong><small>مساحتك الشخصية</small></div><button class="dots-btn" id="editNameBtn" title="تعديل الاسم">•••</button></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu" aria-label="فتح القائمة">☰</button>
+        <div class="breadcrumb"><span>مساحتك</span><b>/</b><strong id="pageLabel">نظرة عامة</strong></div>
+        <div class="top-actions">
+          <span class="connection-pill local" id="connectionStatus"><i></i><span>وضع تجريبي محلي</span></span>
+          <button class="icon-btn" id="quickAddBtn" title="إضافة مهمة">＋</button>
+          <div class="avatar avatar-top" id="topAvatar">ي</div>
+        </div>
+      </header>
+
+      <section class="page active" id="page-home">
+        <div class="welcome-row">
+          <div><div class="eyebrow"><span class="eyebrow-line"></span> مساحتك للإنجاز</div><h1>أهلاً بك، <span id="welcomeName">يا بطل</span> <span class="wave">✦</span></h1><p class="muted">رتّب يومك بهدوء، وخلّ إنجازاتك تتكلم عنك.</p></div>
+          <div class="date-chip"><span class="date-icon">▦</span><span id="todayDate">اليوم</span></div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-glow"></div><div class="hero-content">
+            <div class="hero-tag"><span>✦</span> كل إنجاز يبدأ بخطوة</div>
+            <h2>يوم جديد،<br><em>فرصة جديدة للإنجاز.</em></h2>
+            <p>قسّم أهدافك إلى مهام صغيرة، وابدأ بالأهم. أنت قادر على صنع يوم رائع.</p>
+            <button class="btn btn-light" data-goto="tasks">رتّب مهامك <span>←</span></button>
+          </div>
+          <div class="hero-art" aria-hidden="true"><div class="orbit orbit-a"></div><div class="orbit orbit-b"></div><div class="hero-clock"><span class="clock-hand hand-one"></span><span class="clock-hand hand-two"></span><span class="clock-center"></span><b>و</b></div><span class="float-star star-a">✦</span><span class="float-star star-b">✧</span><span class="float-pill">FOCUS ON</span></div>
+          <div class="hero-index">01 <span>/</span> 04</div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon violet">▤</span><span class="stat-note">في قائمتك</span></div><strong class="stat-number" id="statTotal">0</strong><div class="stat-caption">إجمالي المهام</div><div class="stat-foot"><span class="mini-bar"><i id="totalBar"></i></span><small>مهامك لهذا اليوم</small></div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon mint">✓</span><span class="stat-note positive">استمر!</span></div><strong class="stat-number" id="statDone">0</strong><div class="stat-caption">مهام مكتملة</div><div class="stat-foot"><span class="mini-bar mint-bar"><i id="doneBar"></i></span><small id="donePercent">0% من أهدافك</small></div></article>
+          <article class="stat-card"><div class="stat-top"><span class="stat-icon amber">◷</span><span class="stat-note">تركيزك اليوم</span></div><strong class="stat-number"><span id="statMinutes">0</span><small>د</small></strong><div class="stat-caption">دقائق التركيز</div><div class="stat-foot"><span class="mini-bar amber-bar"><i id="focusBar"></i></span><small>كل دقيقة تُحسب</small></div></article>
+        </div>
+
+        <div class="content-grid">
+          <section class="panel tasks-panel"><div class="panel-heading"><div><span class="section-kicker">خطتك اليومية</span><h3>مهام اليوم <span class="title-bubble" id="todayTaskBadge">0</span></h3></div><button class="text-btn" data-goto="tasks">عرض الكل <span>←</span></button></div><div id="homeTaskList" class="home-task-list"></div><div class="empty-state compact" id="homeTaskEmpty"><div class="empty-illustration">✎</div><strong>يومك يبدأ من هنا</strong><p>أضف أول مهمة وخذ خطوة نحو هدفك.</p><button class="btn btn-primary btn-small" id="emptyAddBtn">＋ إضافة مهمة</button></div></section>
+          <section class="panel quick-panel"><div class="panel-heading"><div><span class="section-kicker">ابدأ الآن</span><h3>اختصارات سريعة</h3></div><span class="sparkle">✦</span></div><button class="quick-action" data-goto="focus"><span class="quick-icon focus-icon">◷</span><span><strong>جلسة تركيز</strong><small>ابتعد عن المشتتات وابدأ</small></span><b>←</b></button><button class="quick-action" data-goto="rooms"><span class="quick-icon room-icon">♧</span><span><strong>تحدَّ صديقاً</strong><small>أنشئ غرفة وابدأ المنافسة</small></span><b>←</b></button><button class="quick-action" data-goto="tasks"><span class="quick-icon plan-icon">▦</span><span><strong>خطّط ليومك</strong><small>رتّب أولوياتك القادمة</small></span><b>←</b></button><div class="encourage-box"><span>✧</span><div><strong>تذكّر</strong><p>لا تحتاج أن تنجز كل شيء دفعة واحدة. ابدأ بالمهمة التالية فقط.</p></div></div></section>
+        </div>
+        <footer class="footer-note">صُمّم وقتك ليكون لك، لا عليك <span>✦</span></footer>
+      </section>
+
+      <section class="page" id="page-tasks">
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> خطوة بخطوة</div><h1>قائمة <span class="gradient-text">مهامك</span></h1><p class="muted">اكتب ما تريد إنجازه، وسنرتّبه معاً.</p></div><button class="btn btn-primary" id="addTaskBtn">＋ مهمة جديدة</button></div>
+        <div class="task-toolbar"><div class="filter-tabs" id="taskFilters"><button class="filter-tab active" data-filter="all">الكل <span id="filterAll">0</span></button><button class="filter-tab" data-filter="active">قيد الإنجاز</button><button class="filter-tab" data-filter="done">مكتملة</button></div><div class="search-box"><span>⌕</span><input id="taskSearch" type="search" placeholder="ابحث عن مهمة..."></div></div>
+        <div class="task-board"><div class="task-board-head"><span>المهمة</span><span>التصنيف</span><span>الأولوية</span><span>الحالة</span><span></span></div><div id="fullTaskList"></div><div class="empty-state" id="taskEmpty"><div class="empty-illustration">✎</div><strong>لا توجد مهام هنا بعد</strong><p>أضف مهمة جديدة لتبدأ بتنظيم وقتك.</p><button class="btn btn-primary btn-small" id="taskEmptyAdd">＋ إضافة مهمة</button></div></div>
+      </section>
+
+      <section class="page" id="page-focus">
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> وقتك الثمين</div><h1>وضع <span class="gradient-text">التركيز</span></h1><p class="muted">جلسة واحدة بهدوء قد تنجز أكثر مما تتوقع.</p></div></div>
+        <div class="focus-layout"><section class="focus-card"><div class="focus-card-top"><span class="focus-live"><i></i> مساحة تركيزك</span><span class="focus-leaf">✦</span></div><div class="timer-wrap"><svg class="timer-ring" viewBox="0 0 300 300" aria-label="مؤقت التركيز"><circle class="timer-track" cx="150" cy="150" r="132"></circle><circle class="timer-progress" id="timerProgress" cx="150" cy="150" r="132"></circle></svg><div class="timer-center"><span id="timerMode">جلسة تركيز</span><strong id="timerDisplay">25:00</strong><small id="timerHint">كل تركيز يقربك من هدفك</small></div></div><div class="timer-presets"><button class="preset active" data-minutes="25">25 دقيقة</button><button class="preset" data-minutes="45">45 دقيقة</button><button class="preset" data-minutes="15">15 دقيقة</button></div><div class="timer-controls"><button class="btn btn-primary timer-main-btn" id="timerStart">ابدأ التركيز <span>▶</span></button><button class="btn btn-soft" id="timerReset" title="إعادة ضبط">↺</button></div><div class="timer-message" id="timerMessage">خذ نفساً عميقاً، واختر مهمة واحدة.</div></section><aside class="focus-side"><div class="panel focus-tips"><span class="section-kicker">نصيحة صغيرة</span><h3>ركّز على شيء واحد.</h3><p>أغلق ما يشتت انتباهك، وضع هدفاً واضحاً لهذه الجلسة. الاستمرارية أهم من الكمال.</p><div class="tip-doodle">✧</div></div><div class="panel focus-summary"><div class="panel-heading"><div><span class="section-kicker">إنجازك</span><h3>وقت التركيز</h3></div><span class="stat-icon amber">◷</span></div><strong class="focus-total"><span id="focusTotal">0</span> <small>دقيقة</small></strong><p>إجمالي الدقائق التي ركّزت فيها على مهامك.</p></div></aside></div>
+      </section>
+
+      <section class="page" id="page-rooms">
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> الإنجاز أحلى مع الأصدقاء</div><h1>غرف <span class="gradient-text">التحدّي</span></h1><p class="muted">اجمع أصدقاءك، اتفقوا على المهام، وشاهدوا التقدّم مباشرة.</p></div></div>
+        <div class="room-banner"><div><span class="room-banner-tag">TIME BATTLE</span><h2>من ينجز أهدافه أولاً؟</h2><p>أنشئ غرفة خاصة أو انضم إلى صديق باستخدام رمز الدعوة.</p></div><div class="banner-graphic"><span class="banner-cup">♛</span><i class="banner-spark s1">✦</i><i class="banner-spark s2">✧</i></div></div>
+        <div class="room-actions-grid"><article class="room-action-card create-card"><div class="room-action-icon">＋</div><h3>أنشئ غرفة جديدة</h3><p>كن المنظّم، اختر اسم الغرفة وشارك رمزها مع أصدقائك.</p><button class="btn btn-primary" id="createRoomBtn">إنشاء غرفة <span>←</span></button></article><article class="room-action-card join-card"><div class="room-action-icon">⌁</div><h3>انضم إلى غرفة</h3><p>هل أرسل لك صديقك رمزاً؟ اكتبه هنا وانضم إلى التحدّي.</p><div class="join-input-row"><input id="joinCodeInput" maxlength="10" placeholder="مثال: WAQ-482" aria-label="رمز الغرفة"><button class="btn btn-dark" id="joinRoomBtn">انضمام</button></div></article></div>
+        <section class="panel room-current" id="roomCurrent"><div class="room-empty"><div class="room-empty-icon">♧</div><strong>لا توجد غرفة مفتوحة الآن</strong><p>أنشئ غرفة أو انضم إلى أصدقائك لتبدأ المنافسة.</p></div></section>
+        <div class="room-note"><span>ⓘ</span><p><strong>حول الاتصال:</strong> النسخة الحالية تعمل محلياً على جهازك. لتعمل الغرف بين أجهزة مختلفة، اربطها بمشروع Supabase من صفحة الإعدادات واتبع خطوات التفعيل.</p></div>
+      </section>
+
+      <section class="page" id="page-settings">
+        <div class="page-heading"><div><div class="eyebrow"><span class="eyebrow-line"></span> خصّص مساحتك</div><h1>الإعدادات <span class="gradient-text">والربط</span></h1><p class="muted">حدّد اسمك، ويمكنك تفعيل الغرف المباشرة بين الأصدقاء.</p></div></div>
+        <div class="settings-grid"><section class="panel settings-card"><div class="panel-heading"><div><span class="section-kicker">ملفك الشخصي</span><h3>كيف نناديك؟</h3></div><div class="stat-icon violet">☺</div></div><label class="field-label" for="settingsName">اسم العرض</label><input class="form-input" id="settingsName" maxlength="24" placeholder="اكتب اسمك"><button class="btn btn-primary" id="saveNameBtn">حفظ الاسم</button></section>
+        <section class="panel settings-card online-settings"><div class="panel-heading"><div><span class="section-kicker">الغرف المباشرة</span><h3>تفعيل الاتصال أونلاين</h3></div><div class="stat-icon mint">⌁</div></div><p class="settings-description">لجعل الأصدقاء ينضمون من أجهزة مختلفة وتظهر التحديثات فوراً، تحتاج إلى مشروع Supabase مجاني الإعداد. لا تضع كلمة مرور أو مفتاحاً سرياً هنا.</p><label class="field-label" for="supabaseUrl">Project URL</label><input class="form-input ltr-input" id="supabaseUrl" placeholder="https://your-project.supabase.co" autocomplete="off"><label class="field-label" for="supabaseKey">Publishable / anon key</label><input class="form-input ltr-input" id="supabaseKey" placeholder="sb_publishable_... أو anon key" autocomplete="off"><div class="settings-buttons"><button class="btn btn-primary" id="connectBtn">حفظ والاتصال</button><button class="btn btn-soft" id="disconnectBtn">إلغاء الربط</button></div><div class="connection-help" id="connectionHelp">بعد إنشاء مشروع Supabase، نفّذ ملف <code>supabase.sql</code> المرفق، وفعّل Anonymous Sign-ins، ثم أدخل بيانات المشروع هنا.</div></section>
+        <section class="panel settings-card"><div class="panel-heading"><div><span class="section-kicker">بياناتك</span><h3>إدارة النسخة المحلية</h3></div><div class="stat-icon amber">▣</div></div><p class="settings-description">مهامك وإعداداتك في الوضع المحلي محفوظة في متصفحك على هذا الجهاز.</p><button class="btn btn-danger-soft" id="clearDataBtn">مسح بيانات هذا الجهاز</button></section></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><span class="section-kicker" id="modalKicker">إضافة جديدة</span><h3 id="modalTitle">مهمة جديدة</h3></div><button class="modal-close" id="modalClose" aria-label="إغلاق">×</button></div><div id="modalBody"></div></div></div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+</body>
+</html>
